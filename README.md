@@ -22,6 +22,8 @@ This will output the hexadecimal machine code equivalent of the input assembly c
 
 `-h, --help`: Print help information.
 
+`-f, --format <FORMAT>`: How to format the output.
+
 ## Example
 
 To assemble a piece of x86-32 assembly code, you can use the following command:

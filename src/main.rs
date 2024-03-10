@@ -1,6 +1,9 @@
 use clap::{Parser, ValueEnum};
 use keystone_engine::{Arch, Keystone, KeystoneError, Mode, OptionType, OptionValue};
 
+mod formats;
+use formats::OutputFormat;
+
 #[derive(Debug, ValueEnum, Clone)]
 enum Architecture {
     Arm,
@@ -25,6 +28,10 @@ struct Args {
 
     /// The code to assemble
     pub code: String,
+
+    /// How to format the output
+    #[clap(short, long, value_enum, default_value_t = OutputFormat::SpacedHexdump)]
+    pub format: OutputFormat,
 }
 
 fn get_keystone(arch: Architecture) -> Result<Keystone, KeystoneError> {
@@ -76,11 +83,13 @@ fn main() {
         }
     };
 
-    let byte_str = bytes
-        .iter()
-        .map(|x| format!("{x:02X}"))
-        .collect::<Vec<String>>()
-        .join(" ");
+    let byte_str = match args.format.format_sequence(&bytes) {
+        Ok(s) => s,
+        Err(why) => {
+            eprintln!("Could not format the result: {why}");
+            return;
+        }
+    };
 
     println!("{byte_str}");
 }
