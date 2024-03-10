@@ -58,3 +58,8 @@ Lazy Assembler supports the following instruction sets:
 - x86-16
 - x86-32
 - x86-64
+
+## Theme song
+(Audio only)
+
+https://github.com/coremaze/laasm/assets/8594162/81b096e6-859d-4f76-824e-3c592da946bd
